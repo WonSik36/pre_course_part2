@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.guestbook.dto.GuestbookDto;
 import org.zerock.guestbook.dto.PageRequestDto;
 import org.zerock.guestbook.service.GuestbookService;
 
@@ -29,5 +32,21 @@ public class GuestbookController {
         log.info("list.................."+dto);
 
         model.addAttribute("result", service.getList(dto));
+    }
+
+    @GetMapping("/register")
+    public void register() {
+        log.info("reister get...");
+    }
+
+    @PostMapping("/register")
+    public String registerPost(GuestbookDto dto, RedirectAttributes redirectAttributes) {
+        log.info("dto...."+dto);
+
+        Long gno = service.register(dto);
+
+        redirectAttributes.addFlashAttribute("msg", gno);
+
+        return "redirect:/guestbook/list";
     }
 }
