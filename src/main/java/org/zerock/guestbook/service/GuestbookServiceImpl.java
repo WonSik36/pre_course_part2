@@ -43,4 +43,19 @@ public class GuestbookServiceImpl implements GuestbookService {
 
         return entityToDto(result);
     }
+
+    @Override
+    public void remove(Long gno) {
+        repository.deleteById(gno);
+    }
+
+    @Override
+    public void modify(GuestbookDto dto) {
+        Guestbook entity = repository.findById(dto.getGno()).orElseThrow();
+
+        entity.changeTitle(dto.getTitle());
+        entity.changeContent(dto.getContent());
+
+        repository.save(entity);
+    }
 }
