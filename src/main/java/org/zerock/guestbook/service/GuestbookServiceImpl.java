@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class GuestbookServiceImpl implements GuestbookService{
+public class GuestbookServiceImpl implements GuestbookService {
     private final GuestbookRepository repository;
 
     @Override
@@ -35,5 +35,12 @@ public class GuestbookServiceImpl implements GuestbookService{
         Page<Guestbook> result = repository.findAll(pageable);
 
         return new PageResultDto<>(result, this::entityToDto);
+    }
+
+    @Override
+    public GuestbookDto read(Long gno) {
+        Guestbook result = repository.findById(gno).orElseThrow();
+
+        return entityToDto(result);
     }
 }
