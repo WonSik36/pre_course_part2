@@ -37,7 +37,7 @@ public class GuestbookController {
 
     @GetMapping("/register")
     public void register() {
-        log.info("reister get...");
+        log.info("register get...");
     }
 
     @PostMapping("/register")
@@ -79,6 +79,9 @@ public class GuestbookController {
         service.modify(dto);
 
         redirectAttributes.addAttribute("page", requestDto.getPage());
+        redirectAttributes.addAttribute("type", requestDto.getType());
+        redirectAttributes.addAttribute("keyword", requestDto.getKeyword());
+
         redirectAttributes.addAttribute("gno", dto.getGno());
 
         return "redirect:/guestbook/read";
